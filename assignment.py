@@ -12,26 +12,13 @@ class Filter(ABC):
 class ExtensionFilter(Filter):
     def __init__(self, allowed):
         self.allowed = allowed
-        self.name = allowed
-    @property
-    def name(self):
-        return self._name
-    @name.setter
-    def name(self, value):
-        new_name = ",".join(value)
-        self._name = "Extension(" + new_name +")"
+        self.name = "Extension(" + ",".join(self.allowed) +")"
     def apply(self, value):
         return value[-4] == "."
 class MaxSizeFilter(Filter):
     def __init__(self, max_size: int):
         self.max_size = max_size
-        self.name = max_size
-    @property
-    def name(self):
-        return self._name
-    @name.setter
-    def name(self, value):
-        self._name = f"MaxSize({value})"
+        self.name = f"MaxSize({self.max_size})"
     def apply(self, value):
         return len(value) <= self.max_size
 class NoSpacesFilter(Filter):
